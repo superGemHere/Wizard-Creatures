@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const creatureService = require("../services/creatureService");
 const { getErrorMessage } = require("../utils/errorHelpers");
+const { getLeanEmails } = require('../utils/getEmails')
 
 router.get("/", async (req, res) => {
   const posts = await creatureService.getAll().lean();
@@ -33,14 +34,27 @@ router.get('/details/:creatureId', async (req, res) => {
     
     
     try{
-        console.log(creatureId)
-        const creatureData = await creatureService.getOne(creatureId).lean();
+        const creatureData = await creatureService.getOne(creatureId).populate('votes.userId').lean();
         const isOwner = req.user?._id == creatureData.owner?._id;
-        console.log(creatureData);
-        res.render('creatures/details', {...creatureData, isOwner})
+
+        const votedUsers = getLeanEmails(creatureData.votes);
+        const isVote = votedUsers.includes(req.user.email)
+        console.log(isVote);
+        // const isVote = voted 
+
+        res.render('creatures/details', {...creatureData, isOwner, isVote})
     }catch(err){
         console.log(err);
     }
+})
+
+router.get('/votes/:creatureId', async (req, res) => {
+  const creatureId = req.params.creatureId;
+  const userId = req.user._id;
+
+  await creatureService.addVote(creatureId, { userId } );
+
+  res.redirect(`/creatures/details/${creatureId}`);
 })
 
 module.exports = router;

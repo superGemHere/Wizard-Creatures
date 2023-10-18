@@ -25,11 +25,13 @@
                                 <a href="/creatures/edit/{{_id}}" class="edit-btn">Edit</a>
                                 <a href="/creatures/delete/{{_id}}" class="del-btn">Delete</a>
                                 {{else}}
+                                {{#unless isVote}}
                                 <!-- logged in users, who have not yet voted-->
-                                <a href="#" class="vote-up">Vote</a>
-
+                                <a href="/creatures/votes/{{_id}}" class="vote-up">Vote</a>
+                                {{else}}
                                 <!-- logged in user who has already voted-->
                                 <p class="thanks-for-vote">Thanks For Voting</p>
+                                {{/unless}}
                                 {{/if}}
 
 
