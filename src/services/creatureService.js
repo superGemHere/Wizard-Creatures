@@ -1,34 +1,31 @@
 const Creature = require("../models/Creature");
 
-
 exports.getAll = () => {
-    return Creature.find();
-}
+  return Creature.find();
+};
 
-exports.getOne = (id) => {
-    return Creature.findById(id).populate('owner');
-}
+exports.getOne = id => {
+  return Creature.findById(id).populate("owner");
+};
 
-exports.createCreature = (creatureData) => {
-    return Creature.create(creatureData);
+exports.createCreature = creatureData => {
+  return Creature.create(creatureData);
+};
 
-}
+exports.getVotes = async creatureId => {
+  return await Creature.findById(creatureId).populate("votes.userId");
+};
 
-exports.getVotes = async(creatureId) => {
-    return await Creature.findById(creatureId).populate('votes.userId');
-   
-}
-
-exports.delete = (creatureId) => {
-    return Creature.findByIdAndDelete(creatureId);
-}
+exports.delete = creatureId => {
+  return Creature.findByIdAndDelete(creatureId);
+};
 
 exports.addVote = async (creatureId, userId) => {
- const creatureData =  await Creature.findById(creatureId);
+  const creatureData = await Creature.findById(creatureId);
 
- console.log(creatureData.votes)
+  console.log(creatureData.votes);
 
- creatureData.votes.push(userId);
+  creatureData.votes.push(userId);
 
- return creatureData.save();
-}
+  return creatureData.save();
+};

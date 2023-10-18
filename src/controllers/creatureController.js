@@ -36,8 +36,14 @@ router.get('/details/:creatureId', async (req, res) => {
     
     
     try{
-        const creatureData = await creatureService.getOne(creatureId).populate('votes.userId').lean();
+        const creatureData = await creatureService.getOne(creatureId)
+        .populate('votes.userId')
+        .lean();
 
+        // 12 bit check
+        if(!creatureData){
+          res.redirect("/404")
+        }
         console.log(creatureData)
 
         const isOwner = req.user?._id == creatureData.owner._id;
@@ -53,6 +59,25 @@ router.get('/details/:creatureId', async (req, res) => {
     }catch(err){
         console.log(err);
     }
+})
+
+router.get('/details/edit/:creatureId', isAuth, async (req, res) =>{
+  let creatureId = req.params.creatureId;
+  console.log(creatureId)
+  try{
+    const creatureData = creatureService.getOne(creatureId).lean();
+    console.log(creatureData)
+    if (req.user._id == creatureData.owner._id) {
+      res.render("creatures/edit", { creatureData });
+    } else {
+      res.redirect("/404");
+    }
+  }catch(err){
+    console.log('edit error');
+    
+    console.log(err);
+    res.render('creatures/edit', {error: getErrorMessage(err)})
+  }
 })
 
 router.get('/votes/:creatureId', isAuth, async (req, res) => {
