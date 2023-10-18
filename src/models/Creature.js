@@ -33,6 +33,10 @@ const creatureSchema = new mongoose.Schema({
     minLenght: [5, 'Description must be atleast 3 characters long.'],
     maxLenght: [500, 'Description cannot pass 500 characters.']
   },
+  owner: {
+    type: mongoose.Types.ObjectId,
+    ref: 'User'
+  }
 });
 
 

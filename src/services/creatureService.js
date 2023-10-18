@@ -6,7 +6,7 @@ exports.getAll = () => {
 }
 
 exports.getOne = (id) => {
-    return Creature.find(id);
+    return Creature.findById(id);
 }
 
 exports.createCreature = (creatureData) => {
