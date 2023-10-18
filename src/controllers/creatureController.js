@@ -46,13 +46,6 @@ router.get('/details/:creatureId', async (req, res) => {
 
         console.log(votedUsers)
 
-        const votesArr = votedUsers.split(', ');
-
-        // const votes = votesArr.length;
-        // console.log(votes);
-
-        // const hasVotes = votes > 0;
-
         const isVote = votedUsers.includes(req.user.email)
         // console.log(isVote);
 
