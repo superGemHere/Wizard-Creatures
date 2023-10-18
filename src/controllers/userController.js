@@ -10,10 +10,10 @@ router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
     const token = await userService.login(email, password);
-    // console.log(token)
     
     res.cookie("token", token);
     res.redirect("/");
+    console.log(token)
   } catch (err) {
     // console.log(err)
     res.render("users/login", { error: getErrorMessage(err) });

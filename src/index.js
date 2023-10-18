@@ -14,10 +14,10 @@ const app = express();
 handlebarsConfig(app);
 expressConfig(app);
 app.use(cookieParser());
+app.use(auth);
 
 // middlewares
 // IMPORTANT auth middleware must be after cookie-parser 
-app.use(auth);
 
 // connect to db
 databaseConnect()
