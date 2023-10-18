@@ -48,15 +48,15 @@ router.get('/details/:creatureId', async (req, res) => {
 
         const votesArr = votedUsers.split(', ');
 
-        const votes = votesArr.length;
-        console.log(votes);
+        // const votes = votesArr.length;
+        // console.log(votes);
 
-        const hasVotes = votes > 0;
+        // const hasVotes = votes > 0;
 
         const isVote = votedUsers.includes(req.user.email)
         // console.log(isVote);
 
-        res.render('creatures/details', {...creatureData, isOwner, isVote, votesCount: votes, hasVotes, votedUsers})
+        res.render('creatures/details', {...creatureData, isOwner, isVote, votes: creatureData.votes.length , votedUsers})
     }catch(err){
         console.log(err);
     }
