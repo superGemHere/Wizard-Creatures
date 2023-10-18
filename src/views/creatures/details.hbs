@@ -22,8 +22,8 @@
                             <div class="social-btn">
                                 <!-- Only for registered user and author of the post -->
                                 {{#if isOwner}}
-                                <a href="/creatures/edit/{{_id}}" class="edit-btn">Edit</a>
-                                <a href="/creatures/delete/{{_id}}" class="del-btn">Delete</a>
+                                <a href="/details/edit/{{_id}}" class="edit-btn">Edit</a>
+                                <a href="/creatures/details/delete/{{_id}}" class="del-btn">Delete</a>
                                 {{else}}
                                 {{#unless isVote}}
                                 <!-- logged in users, who have not yet voted-->
@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <div class="card_right">
-                        <img src="./static/img/Thestral.jpeg"
+                        <img src="{{imageUrl}}"
                             alt="image">
                     </div>
                 </div>
@@ -56,10 +56,11 @@
                             <h1>Votes</h1>
                             <div class="card_vote">
                                 <!-- Show the rating of votes, if there are no votes yet, the number must be 0. -->
-                                <p class="PV">Total rating of votes: 0</p>
+                                <p class="PV">Total rating of votes: {{votesCount}}</p>
                             </div>
+
                             <!-- If there are already people who have cast their vote for the post, separate their emails with a comma and a space ", " -->
-                            <!-- <p class="disc">People who voted for the post - alex@gmai.com, petar@gmail.com, petq@gmail.com</p>-->
+                            <p class="disc">People who voted for the post - alex@gmai.com, petar@gmail.com, petq@gmail.com</p>
 
                             <!-- If not display: -->
                             <p class="disc">People who voted for the post - No one has voted yet.</p>

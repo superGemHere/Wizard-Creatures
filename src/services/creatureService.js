@@ -19,6 +19,10 @@ exports.getVotes = async(creatureId) => {
    
 }
 
+exports.delete = (creatureId) => {
+    return Creature.findByIdAndDelete(creatureId);
+}
+
 exports.addVote = async (creatureId, userId) => {
  const creatureData =  await Creature.findById(creatureId);
 
