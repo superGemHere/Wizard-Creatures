@@ -1,15 +1,26 @@
 const Creature = require("../models/Creature");
+const mongoose = require('mongoose');
 
 exports.getAll = () => {
   return Creature.find();
 };
 
 exports.getOne = id => {
-  return Creature.findById(id).populate("owner");
+  const isValidObjectId = mongoose.isValidObjectId(id);
+  if (!isValidObjectId) {
+    throw new Error('Invalid post ID')
+  }
+  const creature = Creature.findById(id).populate("owner");
+  return creature;
 };
 
 exports.createCreature = creatureData => {
   return Creature.create(creatureData);
+};
+
+exports.updateOne = (creatureId, creatureData) => {
+  const post = Creature.findByIdAndUpdate(creatureId, creatureData, { new: true });
+  return post;
 };
 
 exports.getVotes = async creatureId => {
@@ -29,3 +40,7 @@ exports.addVote = async (creatureId, userId) => {
 
   return creatureData.save();
 };
+
+exports.getByOwner = (userId) => {
+  return Creature.find({owner: userId})
+}
